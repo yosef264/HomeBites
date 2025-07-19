@@ -1,9 +1,8 @@
-import Image from "next/image";
-
+import { Button } from "@/components/ui/button";
 export default function Home() {
   return (
     <>
-    {/* <div className="bg-primary">Hello</div> */}
-    <div className="from-primary to-secondary bg-gradient-to-l min-h-screen"> gradient</div></>
+      <Button className="p-6 text-xl m-2">Suck Me</Button>
+    </>
   );
 }
