@@ -5,7 +5,7 @@ import React from "react"; // No longer need useState as mobile menu is removed
 import Link from "next/link";
 import { motion } from "framer-motion"; // AnimatePresence and useState for mobile menu are no longer needed
 import { Button } from "@/components/ui/button";
-import { ShoppingCart } from "lucide-react"; // Menu and X are no longer needed
+import { Search, ShoppingCart } from "lucide-react"; // Menu and X are no longer needed
 import Image from "next/image";
 
 // Reduced to just two main navigation links
@@ -42,7 +42,7 @@ export function Header() {
         </Link>
 
         {/* Desktop Navigation Links - Now simple flex items, centered between logo and cart */}
-        <nav className="flex items-center space-x-6">
+        <nav className="hidden sm:flex items-center space-x-6">
           {" "}
           {/* No longer absolute positioning, just a flex container */}
           <ul className="flex items-center space-x-6">
@@ -62,7 +62,14 @@ export function Header() {
         {/* Icons (Cart) - Aligned to the right */}
         <div className="flex items-center space-x-3">
           {" "}
-          {/* ml-auto not strictly needed here as justify-between handles spacing */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="relative h-9 w-9 text-green-700 hover:bg-green-100/50 dark:text-green-200 dark:hover:bg-green-800/50"
+          >
+              <Search className="size-5" />
+              <span className="sr-only">Search</span>
+          </Button>
           <Button
             variant="ghost"
             size="icon"
@@ -70,7 +77,7 @@ export function Header() {
             asChild
           >
             <Link href="/cart">
-              <ShoppingCart className="h-5 w-5" />
+              <ShoppingCart className="size-5" />
               <span className="sr-only">Shopping Cart</span>
               <motion.span
                 initial={{ scale: 0 }}
