@@ -1,36 +1,97 @@
-import { House, Search } from "lucide-react";
+// components/header.tsx
+"use client";
+
+import React from "react"; // No longer need useState as mobile menu is removed
 import Link from "next/link";
-import { Button } from "./ui/button";
-export default function Header() {
+import { motion } from "framer-motion"; // AnimatePresence and useState for mobile menu are no longer needed
+import { Button } from "@/components/ui/button";
+import { Search, ShoppingCart } from "lucide-react"; // Menu and X are no longer needed
+import Image from "next/image";
+
+// Reduced to just two main navigation links
+const navLinks = [
+  { name: "Partner", href: "/partner" },
+  { name: "Shop", href: "/shop" },
+  { name: "About", href: "/about" },
+];
+
+export function Header() {
   return (
-    <>
-      <header className="flex p-4 justify-between bg-lighter">
-        {/* Icon and Name part */}
-        <div className="flex">
-          <House className={`bg-gradient-to-br from-primary to-secondary text-lighter rounded-lg h-12 w-12 p-1`} />
-          <div className="pl-2 text-2xl">
-            <h2 className="">HomeBites</h2>
-            <p className="text-[10px]">Local Food Network</p>
-          </div>
-        </div>
-        {/* Food and about us part */}
-        <div className="content-center">
-          <Link href="/food" className="pr-4">
-            Find Food
-          </Link>
-          <Link href="/host" className="pr-4">
-            Become a Host
-          </Link>
-          <Link href="/about">About Us</Link>
-        </div>
-        {/* Search and log in part */}
-        <div className="content-center flex">
-          <Button>
-            Search
-            <Search h-4 w-4 />
+    <motion.header
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ type: "spring", stiffness: 120, damping: 15 }}
+      // Existing light green gradient with blur and dark mode adjustments
+      className="sticky top-0 z-50 w-full border-b border-green-200/50 from-primary/30 to-secondary bg-gradient-to-b dark:bg-secondary/20 backdrop-blur-md flex flex-col items-center"
+    >
+      {/* Main header content container */}
+      <div className="container flex h-16 items-center justify-between px-4 md:px-6">
+        {/* Logo */}
+        <Link href="/" className="flex items-center space-x-2">
+          <Image
+            src={"https://placehold.co/32/green/white?text=HB&font=poppins"}
+            alt="logo"
+            className="size-8 rounded-full"
+            width={32}
+            height={32}
+          />
+          <span className="sr-only">Your Company</span>
+          <span className="hidden text-lg font-bold sm:inline-block text-green-800 dark:text-green-100">
+            HomeBites
+          </span>
+        </Link>
+
+        {/* Desktop Navigation Links - Now simple flex items, centered between logo and cart */}
+        <nav className="hidden sm:flex items-center space-x-6">
+          {" "}
+          {/* No longer absolute positioning, just a flex container */}
+          <ul className="flex items-center space-x-6">
+            {navLinks.map((link) => (
+              <li key={link.name}>
+                <Link
+                  href={link.href}
+                  className="relative text-base font-medium text-green-700 transition-colors after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-0 after:bg-green-600 after:transition-all after:duration-300 hover:text-green-900 hover:after:w-full dark:text-green-200 dark:hover:text-green-50 dark:after:bg-green-300"
+                >
+                  {link.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        {/* Icons (Cart) - Aligned to the right */}
+        <div className="flex items-center space-x-3">
+          {" "}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="relative h-9 w-9 text-green-700 hover:bg-green-100/50 dark:text-green-200 dark:hover:bg-green-800/50"
+          >
+              <Search className="size-5" />
+              <span className="sr-only">Search</span>
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="relative h-9 w-9 text-green-700 hover:bg-green-100/50 dark:text-green-200 dark:hover:bg-green-800/50"
+            asChild
+          >
+            <Link href="/cart">
+              <ShoppingCart className="size-5" />
+              <span className="sr-only">Shopping Cart</span>
+              <motion.span
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-green-600 text-xs text-white dark:bg-green-400 dark:text-green-900"
+              >
+                3 {/* Example cart item count */}
+              </motion.span>
+            </Link>
           </Button>
         </div>
-      </header>
-    </>
+      </div>
+      {/* Removed: Mobile Menu (AnimatePresence and its contents) */}
+    </motion.header>
   );
 }
