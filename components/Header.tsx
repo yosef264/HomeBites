@@ -4,10 +4,10 @@ import { Button } from "./ui/button";
 export default function Header() {
   return (
     <>
-      <header className="flex p-4 justify-between bg-light">
+      <header className="flex p-4 justify-between bg-lighter">
         {/* Icon and Name part */}
         <div className="flex">
-          <House className="bg-primary text-lighter rounded-lg h-12 w-12 p-1 " />
+          <House className={`bg-gradient-to-br from-primary to-secondary text-lighter rounded-lg h-12 w-12 p-1`} />
           <div className="pl-2 text-2xl">
             <h2 className="">HomeBites</h2>
             <p className="text-[10px]">Local Food Network</p>
